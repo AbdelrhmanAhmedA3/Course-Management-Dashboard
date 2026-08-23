@@ -1,14 +1,12 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Service, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class AuthService {
+  private router = inject(Router);
   private readonly _isAuthenticated = signal<boolean>(false);
   public readonly isAuthenticated = this._isAuthenticated.asReadonly();
 
-  constructor(private router: Router) {}
 
   checkInitialAuthentication(): void {
     const user = localStorage.getItem('user');

@@ -1,7 +1,7 @@
-import { Injectable, inject } from "@angular/core";
+import { Service, inject } from "@angular/core";
 import { AuthService } from "../auth/auth.service";
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class AppInitializeService {
   private authService = inject(AuthService);
 

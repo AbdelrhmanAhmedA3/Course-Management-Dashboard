@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from 'core/services';
@@ -5,16 +6,18 @@ import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
+import { ValidationError } from 'shared/components';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, InputIcon, IconField, InputText,Password],
+  imports: [ReactiveFormsModule, InputIcon, IconField, InputText,Password,NgOptimizedImage, ValidationError],
   template: `
     <div class="min-h-screen flex flex-col md:flex-row justify-center">
       <!-- Image Half -->
-      <div class="hidden md:flex md:w-1/2 bg-gray-100 items-center justify-center">
+      <div class="hidden md:flex md:w-1/2 bg-gray-100 items-center justify-center relative">
         <!-- Placeholder for image -->
-        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Login Background" class="object-fill w-full h-full" />
+        <img priority="high" fill ngSrc="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Login Background" class="object-fill" />
       </div>
       
       <!-- Form Half -->
@@ -31,12 +34,10 @@ import { Password } from 'primeng/password';
                   formControlName="email"
                   fluid
                   placeholder="admin@example.com" />
-                  <p-inputicon class="pi pi-envelope" />
-            </p-iconfield>
-            </div>
-              @if (loginForm.controls['email'].invalid && loginForm.controls['email'].touched) {
-                <p class="mt-2 text-sm text-red-600">Please enter a valid email address.</p>
-              }
+                <p-inputicon class="pi pi-envelope" />
+              </p-iconfield>
+              </div>
+              <validation-error [control]="loginForm.controls.email" message="Please enter a valid email address." />
             </div>
 
             <div>
@@ -47,12 +48,10 @@ import { Password } from 'primeng/password';
                 inputId="password"
                 [toggleMask]="true" 
                 fluid 
-  
+                placeholder="Enter your password"
 />
               </div>
-              @if (loginForm.controls['password'].invalid && loginForm.controls['password'].touched) {
-                <p class="mt-2 text-sm text-red-600">Password is required.</p>
-              }
+              <validation-error [control]="loginForm.controls.password" message="Password is required." />
             </div>
 
             <div>
