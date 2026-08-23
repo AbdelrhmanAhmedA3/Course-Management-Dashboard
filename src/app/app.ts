@@ -1,5 +1,7 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, effect, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +10,18 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('Course-Management-Dashboard');
+  private router = inject(Router);
+ private navEndSignal = toSignal(
+    this.router.events.pipe(filter((e) => e instanceof NavigationEnd)),
+  );
+
+  private navEndEffect = effect(() => {
+    if (!this.navEndSignal()) return;
+    this.removeSplashScreen();
+  });
+
+  removeSplashScreen() {
+    document.getElementById('splash-screen')?.remove();
+    document.getElementById('splash-styles')?.remove();
+  }
 }
