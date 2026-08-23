@@ -2,16 +2,16 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from 'core/services';
+import { Button } from 'primeng/button';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
 import { ValidationError } from 'shared/components';
-
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, InputIcon, IconField, InputText,Password,NgOptimizedImage, ValidationError],
+  imports: [ReactiveFormsModule, InputIcon, IconField, InputText,Password,NgOptimizedImage, ValidationError,Button],
   template: `
     <div class="min-h-screen flex flex-col md:flex-row justify-center">
       <!-- Image Half -->
@@ -55,13 +55,13 @@ import { ValidationError } from 'shared/components';
             </div>
 
             <div>
-              <button 
+              <p-button 
                 type="submit" 
                 [disabled]="loginForm.invalid"
-                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+fluid
               >
                 Sign in
-              </button>
+              </p-button>
             </div>
           </form>
         </div>
@@ -72,7 +72,7 @@ import { ValidationError } from 'shared/components';
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
-
+  
   loginForm = this.fb.group({
     email: ['admin@example.com', [Validators.required, Validators.email]],
     password: ['password123', [Validators.required]]

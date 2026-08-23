@@ -9,7 +9,17 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [authGuard],
-    loadComponent: () => import('./features/dashboard/pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
+    loadComponent: () => import('./features/dashboard/pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/courses/pages/course-list/course-list.component').then(m => m.CourseListComponent)
+      },
+      {
+        path: 'details/:id',
+        loadComponent: () => import('./features/courses/pages/course-details/course-details.component').then(m => m.CourseDetailsComponent)
+      }
+    ]
   },
   {
     path: '**',
