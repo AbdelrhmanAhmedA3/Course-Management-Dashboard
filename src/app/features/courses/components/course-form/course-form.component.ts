@@ -80,7 +80,7 @@ export class CourseFormComponent {
   statusOptions = ['Active', 'Draft', 'Archived'];
 
   courseForm = this.fb.nonNullable.group({
-    id: [null as number | null],
+    id: [null as string | null],
     courseName: ['', [Validators.required, Validators.minLength(3)]],
     instructorName: ['', Validators.required],
     category: ['', Validators.required],

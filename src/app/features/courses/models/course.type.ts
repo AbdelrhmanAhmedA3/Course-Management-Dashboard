@@ -1,11 +1,11 @@
-export interface Course {
-  id: number;
+export type Course = {
+  id: string;
   courseName: string;
   instructorName: string;
   category: string;
   duration: number;
   price: number;
-  status: 'Active' | 'Draft' | 'Archived';
-  description?: string;
+  status: string;
   createdDate: string;
-}
+  description: string;
+};

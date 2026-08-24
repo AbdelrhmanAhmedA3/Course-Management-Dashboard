@@ -1,0 +1,111 @@
+<div class="max-w-4xl mx-auto">
+  <!-- Back -->
+  <div class="mb-6 flex items-center justify-between">
+    <a
+      routerLink="/"
+      class="text-blue-600 hover:text-blue-800 flex items-center text-sm font-medium"
+    >
+      <i class="pi pi-arrow-left mr-2"></i>
+      Back to Courses
+    </a>
+  </div>
+
+  @if (course.isLoading()) {
+    <div class="flex justify-center py-20">Loading...</div>
+  }
+
+  @if (course.error()) {
+    <div class="p-4 rounded-lg bg-red-50 text-red-600">Failed to load course.</div>
+  }
+
+  @if (course.value(); as courseData) {
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <!-- Header -->
+      <div class="p-8 border-b border-gray-100 bg-gray-50">
+        <div class="flex justify-between items-start">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Course Details</h1>
+
+            <p class="text-gray-500">ID: {{ courseData.id }}</p>
+          </div>
+
+          <span
+            class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full"
+            [class.bg-green-100]="courseData.status === 'Active'"
+            [class.text-green-800]="courseData.status === 'Active'"
+            [class.bg-yellow-100]="courseData.status === 'Draft'"
+            [class.text-yellow-800]="courseData.status === 'Draft'"
+            [class.bg-gray-100]="courseData.status === 'Archived'"
+            [class.text-gray-800]="courseData.status === 'Archived'"
+          >
+            {{ courseData.status }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Details -->
+      <div class="p-8 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Course Name -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-500 mb-1">Title</h3>
+
+            <p class="text-lg text-gray-900">
+              {{ courseData.courseName }}
+            </p>
+          </div>
+
+          <!-- Category -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-500 mb-1">Category</h3>
+
+            <p class="text-lg text-gray-900">
+              {{ courseData.category }}
+            </p>
+          </div>
+
+          <!-- Instructor -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-500 mb-1">Instructor</h3>
+
+            <p class="text-lg text-gray-900">
+              {{ courseData.instructorName }}
+            </p>
+          </div>
+
+          <!-- Duration -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-500 mb-1">Duration</h3>
+
+            <p class="text-lg text-gray-900">{{ courseData.duration }} hours</p>
+          </div>
+
+          <!-- Price -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-500 mb-1">Price</h3>
+
+            <p class="text-lg text-gray-900">${{ courseData.price }}</p>
+          </div>
+
+          <!-- Created Date -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-500 mb-1">Created Date</h3>
+
+            <p class="text-lg text-gray-900">
+              {{ courseData.createdDate }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="pt-6 border-t border-gray-100">
+          <h3 class="text-sm font-medium text-gray-500 mb-2">Description</h3>
+
+          <p class="text-gray-700 leading-relaxed">
+            {{ courseData.description || 'No description available.' }}
+          </p>
+        </div>
+      </div>
+    </div>
+  }
+</div>

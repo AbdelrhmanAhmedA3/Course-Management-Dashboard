@@ -1,7 +1,9 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
+import { toastInterceptor } from 'core/interceptors';
 import { AppInitializeService } from 'core/services';
+import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import { AppTheme } from './app-theme';
 import { routes } from './app.routes';
@@ -18,8 +20,9 @@ export const appConfig: ApplicationConfig = {
     ),
     providePrimeNG(AppTheme),
     provideHttpClient(
-      withInterceptors([])
+      withInterceptors([toastInterceptor])
     ),
+    MessageService,
      provideAppInitializer(() => inject(AppInitializeService).initialize()),
   ]
 };
